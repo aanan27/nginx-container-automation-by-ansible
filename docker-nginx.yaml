@@ -1,0 +1,57 @@
+---
+# This playbook installs nginx as a Docker container on remote hosts in the [webservers] group and mounts a volume
+- hosts: webservers
+  become: yes
+  tasks:
+    - name: Install prerequisites
+      package:
+        name:
+          - yum-utils
+          - device-mapper-persistent-data
+          - lvm2
+        state: present
+      when: ansible_os_family == 'RedHat'
+
+    - name: Add Docker repository
+      yum_repository:
+        name: docker-ce-stable
+        description: Docker CE Stable - $basearch
+        baseurl: https://download.docker.com/linux/centos/7/$basearch/stable
+        gpgcheck: yes
+        enabled: yes
+        gpgkey: https://download.docker.com/linux/centos/gpg
+      when: ansible_os_family == 'RedHat'
+
+    - name: Install Docker Engine
+      package:
+        name: docker-ce
+        state: present
+      when: ansible_os_family == 'RedHat'
+
+    - name: Start and enable Docker service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+      when: ansible_os_family == 'RedHat'
+
+    - name: Pull nginx Docker image
+      docker_image:
+        name: nginx
+        source: pull
+
+    - name: Create volume
+      docker_volume:
+        name: nginx-data
+        driver: local
+
+    - name: Run nginx Docker container
+      docker_container:
+        name: nginx
+        image: nginx
+        state: started
+        ports:
+          - "8080:80"  # Map container port 80 to host port 8080
+        volumes:
+          - "nginx-data:/usr/share/nginx/html:ro"
+
