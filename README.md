@@ -14,8 +14,7 @@ Modify Playbook (Optional): If necessary, customize the docker-nginx.yaml playbo
 
 Run Playbook: Execute the playbook on your target host by running the following command in your terminal:
 
-bash
-Copy code
+
 ansible-playbook docker-nginx.yaml
 This command will initiate the automation process, which includes installing Docker, pulling the Nginx image from the Docker Hub registry, creating necessary volumes, and starting the Nginx container.
 
