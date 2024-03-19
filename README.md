@@ -10,18 +10,4 @@ This Ansible playbook automates the setup of an Nginx web server as a Docker con
    ```bash
    git clone https://github.com/aanan27/nginx-container-automation-by-ansible.git
 
-Modify Playbook (Optional): If necessary, customize the docker-nginx.yaml playbook file to match your specific environment requirements. You can adjust variables, such as Nginx configuration settings or mounted volume paths, to suit your needs.
-
-Run Playbook: Execute the playbook on your target host by running the following command in your terminal:
-
-
-ansible-playbook docker-nginx.yaml
-This command will initiate the automation process, which includes installing Docker, pulling the Nginx image from the Docker Hub registry, creating necessary volumes, and starting the Nginx container.
-
-Prerequisites
-Before using this playbook, ensure that the following prerequisites are met:
-
-Target Host: You need access to a CentOS or Ubuntu system where you want to deploy the Nginx container. Ensure SSH access to the target host is available.
-
-Local Environment: Ansible must be installed on your local machine to execute the playbook. If Ansible is not installed, refer to the official Ansible documentation for installation instructions.
 
